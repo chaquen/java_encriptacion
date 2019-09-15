@@ -23,7 +23,10 @@ import java.awt.event.MouseEvent;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsonable;
+import com.github.cliftonlabs.json_simple.JsonArray;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -86,22 +89,14 @@ public class Contenido extends JFrame {
 	 */
 	public Contenido() {
 		
+		lblNewLabel_1 = new JLabel("");
 		chckbxTodosHash = new JCheckBox("TODOS");
-		chckSHA512 = new JCheckBox("SHA512");	
-		checkMD5 = new JCheckBox("MD5");
-		chckSHA1 = new JCheckBox("SHA1");
-		chckSha256 = new JCheckBox("SHA256");
 			
 		
 		chckbxTodosSimetrico = new JCheckBox("TODOS");
-		chckAES = new JCheckBox("AES");
-		chckbxDes = new JCheckBox("DES");
 		
 		chckTodosAsimetricos = new JCheckBox("TODOS");
-		chckbxDH = new JCheckBox("Diffie-Hellman");
-		chckRSA = new JCheckBox("RSA");
-		
-		
+				
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 510, 333);
 		contentPane = new JPanel();
@@ -225,15 +220,11 @@ public class Contenido extends JFrame {
 				  chckbxDes.setSelected(true);
 				  chckAES.setSelected(true);
 				  
-				  /*algoritmos_asimetricos[4] = "DES";
-				  algoritmos_asimetricos[5] = "AES";*/
-				  
 				  
 			  }else {
 				  chckbxDes.setSelected(false);
 				  chckAES.setSelected(false);
-				  /*algoritmos_asimetricos[4] = "";
-				  algoritmos_asimetricos[5] = "";*/
+			
 				 
 			  }
 			}
@@ -274,34 +265,7 @@ public class Contenido extends JFrame {
 		gbc_chckTodosAsimetricos.gridx = 3;
 		gbc_chckTodosAsimetricos.gridy = 3;
 		contentPane.add(chckTodosAsimetricos, gbc_chckTodosAsimetricos);
-		
-		lblNewLabel_1 = new JLabel("");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 2;
-		gbc_lblNewLabel_1.gridy = 4;
-		contentPane.add(lblNewLabel_1, gbc_lblNewLabel_1);
-		
-		chckSHA512.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {  
-				   seleccionar_algoritmo(arg0,"SHA512");
-				}
-			});
-		
-		
-		
-		chckSha256.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				seleccionar_algoritmo(arg0,"SHA256");
-			}
-		});
-		
-		
-		chckSHA1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				seleccionar_algoritmo(arg0,"SHA1");
-			}
-		});
+		checkMD5 = new JCheckBox("MD5");
 		
 		checkMD5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -312,20 +276,30 @@ public class Contenido extends JFrame {
 		gbc_checkMD5.anchor = GridBagConstraints.WEST;
 		gbc_checkMD5.insets = new Insets(0, 0, 5, 5);
 		gbc_checkMD5.gridx = 1;
-		gbc_checkMD5.gridy = 5;
+		gbc_checkMD5.gridy = 4;
 		contentPane.add(checkMD5, gbc_checkMD5);
-			
-		chckbxDes.addActionListener(new ActionListener() {
+		chckSHA1 = new JCheckBox("SHA1");
+		
+		
+		chckSHA1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				seleccionar_algoritmo(arg0,"DES");
-				}
-			});
+				seleccionar_algoritmo(arg0,"SHA1");
+			}
+		});
+		chckbxDes = new JCheckBox("DES");
+		
+		chckbxDes.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			seleccionar_algoritmo(arg0,"DES");
+			}
+		});
 		GridBagConstraints gbc_chckbxDes = new GridBagConstraints();
 		gbc_chckbxDes.fill = GridBagConstraints.HORIZONTAL;
 		gbc_chckbxDes.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxDes.gridx = 2;
-		gbc_chckbxDes.gridy = 5;
+		gbc_chckbxDes.gridy = 4;
 		contentPane.add(chckbxDes, gbc_chckbxDes);		
+		chckRSA = new JCheckBox("RSA");
 		
 		chckRSA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -336,14 +310,32 @@ public class Contenido extends JFrame {
 		gbc_chckRSA.fill = GridBagConstraints.HORIZONTAL;
 		gbc_chckRSA.insets = new Insets(0, 0, 5, 0);
 		gbc_chckRSA.gridx = 3;
-		gbc_chckRSA.gridy = 5;
+		gbc_chckRSA.gridy = 4;
 		contentPane.add(chckRSA, gbc_chckRSA);
 		GridBagConstraints gbc_chckSHA1 = new GridBagConstraints();
 		gbc_chckSHA1.anchor = GridBagConstraints.WEST;
 		gbc_chckSHA1.insets = new Insets(0, 0, 5, 5);
 		gbc_chckSHA1.gridx = 1;
-		gbc_chckSHA1.gridy = 6;
+		gbc_chckSHA1.gridy = 5;
 		contentPane.add(chckSHA1, gbc_chckSHA1);
+		chckSha256 = new JCheckBox("SHA256");
+		
+		
+		
+		chckSha256.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				seleccionar_algoritmo(arg0,"SHA256");
+			}
+		});
+		chckbxDH = new JCheckBox("Diffie-Hellman");
+		
+		
+		chckbxDH.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				seleccionar_algoritmo(arg0,"DH");
+			}
+		});
+		chckAES = new JCheckBox("AES");
 		
 		
 		chckAES.addActionListener(new ActionListener() {
@@ -355,49 +347,52 @@ public class Contenido extends JFrame {
 		gbc_chckAES.anchor = GridBagConstraints.WEST;
 		gbc_chckAES.insets = new Insets(0, 0, 5, 5);
 		gbc_chckAES.gridx = 2;
-		gbc_chckAES.gridy = 6;
+		gbc_chckAES.gridy = 5;
 		contentPane.add(chckAES, gbc_chckAES);
-		
-		
-		chckbxDH.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				seleccionar_algoritmo(arg0,"DH");
-			}
-		});
 		GridBagConstraints gbc_chckbxDH = new GridBagConstraints();
 		gbc_chckbxDH.fill = GridBagConstraints.HORIZONTAL;
 		gbc_chckbxDH.insets = new Insets(0, 0, 5, 0);
 		gbc_chckbxDH.gridx = 3;
-		gbc_chckbxDH.gridy = 6;
+		gbc_chckbxDH.gridy = 5;
 		contentPane.add(chckbxDH, gbc_chckbxDH);
 		GridBagConstraints gbc_chckSha256 = new GridBagConstraints();
 		gbc_chckSha256.anchor = GridBagConstraints.WEST;
 		gbc_chckSha256.insets = new Insets(0, 0, 5, 5);
 		gbc_chckSha256.gridx = 1;
-		gbc_chckSha256.gridy = 7;
+		gbc_chckSha256.gridy = 6;
 		contentPane.add(chckSha256, gbc_chckSha256);
+		
+		
+		btnGuardar = new JButton("Encriptar");
+		/*EVENTO: para encrptar los datos enviados por el usuario */
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				String usuario=txtFldUsuario.getText();
+				String clave=txtFldClave.getText();						
+				if(!usuario.isEmpty() && !clave.isEmpty()) {
+					Hashtable <String,String> lista = encriptar_datos(usuario.trim(),clave.trim(),lista_algortimos);
+					lista.forEach((algortimo,cifrado) -> guardar_en_archivo(algortimo,cifrado));
+					lista_algortimos.clear();
+					lista.clear();
+					lblNewLabel_1.setText("Datos cifrados.");
+				}else {
+					lblNewLabel_1.setText("Debes ingresar datos.");
+				}
+			}
+		});
+		chckSHA512 = new JCheckBox("SHA512");	
+		
+		chckSHA512.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {  
+				   seleccionar_algoritmo(arg0,"SHA512");
+				}
+			});
 		GridBagConstraints gbc_chckSHA512 = new GridBagConstraints();
 		gbc_chckSHA512.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_chckSHA512.insets = new Insets(0, 0, 5, 5);
 		gbc_chckSHA512.gridx = 1;
-		gbc_chckSHA512.gridy = 8;
+		gbc_chckSHA512.gridy = 7;
 		contentPane.add(chckSHA512, gbc_chckSHA512);
-		
-		btnGuardar = new JButton("Encriptar");
-		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String usuario=txtFldUsuario.getText();
-				String clave=txtFldClave.getText();
-								
-				Hashtable <String,String> lista = encriptar_datos(usuario.trim(),clave.trim(),lista_algortimos);
-				
-				lista.forEach((m,n) -> System.out.println(m+":"+n));
-				
-				
-				
-			}
-		});
 		GridBagConstraints gbc_btnGuardar = new GridBagConstraints();
 		gbc_btnGuardar.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnGuardar.anchor = GridBagConstraints.NORTH;
@@ -406,16 +401,47 @@ public class Contenido extends JFrame {
 		gbc_btnGuardar.gridy = 9;
 		contentPane.add(btnGuardar, gbc_btnGuardar);
 		
-	}
-	
-	
-	public void mostrar_datos_encriptados(String algoritmo,String dato) {
+		
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_1.gridx = 2;
+		gbc_lblNewLabel_1.gridy = 10;
+		contentPane.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 	}
 	
 	
+	public void guardar_en_archivo(String algoritmo,String cifrado) {
+		try
+		{
+			
+			//Crear un objeto File se encarga de crear o abrir acceso a un archivo que se especifica en su constructor
+			File archivo=new File("../Eje3Criptografia/criptos/texto.txt");
+	
+			//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
+			FileWriter escribir=new FileWriter(archivo,true);
+
+			//Escribimos en el archivo con el metodo write
+			escribir.append(algoritmo+":"+cifrado+System.getProperty("line.separator"));
+
+			//Cerramos la conexion
+			escribir.close();
+			System.out.println(algoritmo+":"+cifrado);
+		}
+
+		//Si existe un problema al escribir cae aqui
+		catch(Exception e)
+		{
+			System.out.println("Error al escribir en archivo: "+e.getMessage());
+		}
+	} 
+	
+	
+	
+	
 	public void seleccionar_algoritmo(ActionEvent arg,String algoritmo) {
 		  JCheckBox checkbox = (JCheckBox) arg.getSource();
+		  
 		  int posicion=-1;
 		  if(checkbox.isSelected()) {
 			  lista_algortimos.add(algoritmo);
@@ -423,10 +449,13 @@ public class Contenido extends JFrame {
 			  posicion =lista_algortimos.indexOf(algoritmo);
 			  if(posicion>=0) {
 				  lista_algortimos.remove(posicion);
+			  }else {
+				  System.out.println("NO se pudo eliminar el algoritmo.");
 			  }
 				  
 			  
 		  }
+		  
 	}
 	
 	
@@ -435,14 +464,14 @@ public class Contenido extends JFrame {
 		String cadena_a_encriptar=usuario+":"+clave;
 		
 		
-		algoritmos.forEach((algo) -> validar_algoritmo(algo,cadena_a_encriptar));	
+		algoritmos.forEach((algoritmo) -> validar_algoritmo(algoritmo,cadena_a_encriptar));	
 		
 		
 		return lista_datos_encriptados;
 	}
 
 	
-	
+	/*FUncion para validar algortimo seleccionado*/
 	public void validar_algoritmo(String algoritmo,String cadena_a_encriptar) {
 		
 		switch(algoritmo) {
@@ -459,10 +488,13 @@ public class Contenido extends JFrame {
 				lista_datos_encriptados.put(algoritmo,CriptografiaHash.encriptar_sha512(cadena_a_encriptar));
 				break;
 			case "DES":
+				lista_datos_encriptados.put(algoritmo,CriptografiaSimetrica.encriptar_triple_des(cadena_a_encriptar).toString());
 				break;
-			case "AES":
+			case "AES":				
+				lista_datos_encriptados.put(algoritmo,CriptografiaSimetrica.encriptar_aes(cadena_a_encriptar).toString());
 				break;
 			case "RSA":
+				lista_datos_encriptados.put(algoritmo,CriptografiaAsimetrica.encriptar_rsa(cadena_a_encriptar));
 				break;
 			case "DH":
 				break;
