@@ -58,9 +58,7 @@ public class Contenido extends JFrame {
 	private JCheckBox chckbxTodosSimetrico;
 	private JCheckBox chckAES;
 	private JLabel lblFuncionesHash;
-	private JCheckBox chckTodosAsimetricos;
 	private JCheckBox chckRSA;
-	private JCheckBox chckbxDH;	
 	protected Hashtable<String,String> lista_datos_encriptados = new Hashtable<String,String>();
 	protected ArrayList<String> lista_algortimos = new ArrayList<String>();
 	private CriptografiaAsimetrica cripto_asimetrica = new CriptografiaAsimetrica();
@@ -94,8 +92,6 @@ public class Contenido extends JFrame {
 			
 		
 		chckbxTodosSimetrico = new JCheckBox("TODOS");
-		
-		chckTodosAsimetricos = new JCheckBox("TODOS");
 				
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 510, 333);
@@ -235,36 +231,6 @@ public class Contenido extends JFrame {
 		gbc_chckbxTodosSimetrico.gridx = 2;
 		gbc_chckbxTodosSimetrico.gridy = 3;
 		contentPane.add(chckbxTodosSimetrico, gbc_chckbxTodosSimetrico);
-		
-		
-		chckTodosAsimetricos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				  seleccionar_algoritmo(arg0,"RSA");
-				  seleccionar_algoritmo(arg0,"DH");
-				  JCheckBox cbLog = (JCheckBox) arg0.getSource();
-				  if(cbLog.isSelected()) {
-					  chckRSA.setSelected(true);
-					  chckbxDH.setSelected(true);
-					  
-					  /*algoritmos_asimetricos[4] = "DES";
-					  algoritmos_asimetricos[5] = "AES";*/
-					  
-					  
-				  }else {
-					  chckRSA.setSelected(false);
-					  chckbxDH.setSelected(false);
-					  /*algoritmos_asimetricos[4] = "";
-					  algoritmos_asimetricos[5] = "";*/
-					  
-				  }
-			}
-		});
-		GridBagConstraints gbc_chckTodosAsimetricos = new GridBagConstraints();
-		gbc_chckTodosAsimetricos.fill = GridBagConstraints.HORIZONTAL;
-		gbc_chckTodosAsimetricos.insets = new Insets(0, 0, 5, 0);
-		gbc_chckTodosAsimetricos.gridx = 3;
-		gbc_chckTodosAsimetricos.gridy = 3;
-		contentPane.add(chckTodosAsimetricos, gbc_chckTodosAsimetricos);
 		checkMD5 = new JCheckBox("MD5");
 		
 		checkMD5.addActionListener(new ActionListener() {
@@ -272,6 +238,19 @@ public class Contenido extends JFrame {
 				seleccionar_algoritmo(arg0,"MD5");
 				}
 			});
+		chckRSA = new JCheckBox("RSA");
+		
+		chckRSA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				seleccionar_algoritmo(arg0,"RSA");
+			}
+		});
+		GridBagConstraints gbc_chckRSA = new GridBagConstraints();
+		gbc_chckRSA.fill = GridBagConstraints.HORIZONTAL;
+		gbc_chckRSA.insets = new Insets(0, 0, 5, 0);
+		gbc_chckRSA.gridx = 3;
+		gbc_chckRSA.gridy = 3;
+		contentPane.add(chckRSA, gbc_chckRSA);
 		GridBagConstraints gbc_checkMD5 = new GridBagConstraints();
 		gbc_checkMD5.anchor = GridBagConstraints.WEST;
 		gbc_checkMD5.insets = new Insets(0, 0, 5, 5);
@@ -299,19 +278,6 @@ public class Contenido extends JFrame {
 		gbc_chckbxDes.gridx = 2;
 		gbc_chckbxDes.gridy = 4;
 		contentPane.add(chckbxDes, gbc_chckbxDes);		
-		chckRSA = new JCheckBox("RSA");
-		
-		chckRSA.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				seleccionar_algoritmo(arg0,"RSA");
-			}
-		});
-		GridBagConstraints gbc_chckRSA = new GridBagConstraints();
-		gbc_chckRSA.fill = GridBagConstraints.HORIZONTAL;
-		gbc_chckRSA.insets = new Insets(0, 0, 5, 0);
-		gbc_chckRSA.gridx = 3;
-		gbc_chckRSA.gridy = 4;
-		contentPane.add(chckRSA, gbc_chckRSA);
 		GridBagConstraints gbc_chckSHA1 = new GridBagConstraints();
 		gbc_chckSHA1.anchor = GridBagConstraints.WEST;
 		gbc_chckSHA1.insets = new Insets(0, 0, 5, 5);
@@ -325,14 +291,6 @@ public class Contenido extends JFrame {
 		chckSha256.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				seleccionar_algoritmo(arg0,"SHA256");
-			}
-		});
-		chckbxDH = new JCheckBox("Diffie-Hellman");
-		
-		
-		chckbxDH.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				seleccionar_algoritmo(arg0,"DH");
 			}
 		});
 		chckAES = new JCheckBox("AES");
@@ -349,12 +307,6 @@ public class Contenido extends JFrame {
 		gbc_chckAES.gridx = 2;
 		gbc_chckAES.gridy = 5;
 		contentPane.add(chckAES, gbc_chckAES);
-		GridBagConstraints gbc_chckbxDH = new GridBagConstraints();
-		gbc_chckbxDH.fill = GridBagConstraints.HORIZONTAL;
-		gbc_chckbxDH.insets = new Insets(0, 0, 5, 0);
-		gbc_chckbxDH.gridx = 3;
-		gbc_chckbxDH.gridy = 5;
-		contentPane.add(chckbxDH, gbc_chckbxDH);
 		GridBagConstraints gbc_chckSha256 = new GridBagConstraints();
 		gbc_chckSha256.anchor = GridBagConstraints.WEST;
 		gbc_chckSha256.insets = new Insets(0, 0, 5, 5);
